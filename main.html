@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+   
+   /* Sidebar */
+.sidebar {
+  width: 360px;
+  min-height: 100vh;
+  background: #0b1622;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 30px 20px;
+  z-index: 1000;
+}
+
+/* Profile */
+.profile-pic {
+  width: 140px;  /* bigger profile image */
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  border: 4px solid #1d2a38;
+  margin-top: 15%;
+}
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sidebar h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;  /* bigger name */
+}
+
+/* Navigation */
+.sidebar nav {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+.sidebar nav a {
+  display: block;
+  padding: 15px 20px;  /* bigger padding */
+  color: #ccc;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-bottom: 12px; /* bigger gap */
+  font-size: 22px;     /* bigger font */
+  transition: all 0.3s ease;
+}
+.sidebar nav a i {
+  margin-right: 12px;  /* spacing between icon and text */
+  font-size: 22px;
+}
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: #1d2a38;
+  color: #fff;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top: auto; /* pushes to bottom */
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.social-icons a {
+  width: 45px;
+  height: 45px;
+  background: #1d2a38;
+  color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: all 0.3s ease;
+}
+.social-icons a:hover {
+  background: #fff;
+  color: #0b1622;
+  transform: scale(1.1);
+}
+
+
+    /* Main Content */
+    .main {
+      margin-left: 380px;
+      padding: 40px 20px;
+      transition: margin-left 0.3s;
+    }
+
+    /* Section Animation */
+    .section {
+      display: none;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section p{
+        font-size: 24px;
+        font-family: 'Times New Roman', Times, serif;
+    }
+
+    /* Home */
+   /* Hero Section (Image + Overlay Text) */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full screen height */
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover; /* fills nicely without stretch */
+}
+
+.hero-text {
+  position: absolute;
+  top: 60%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: rgb(6, 6, 6); /* text visible on image */
+  padding: 20px 40px;
+  border-radius: 10px;
+}
+.hero-text h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.hero-text h3 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+    /* Resume Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #0d6efd;
+    }
+    .timeline-item {
+      margin-bottom: 30px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      background: #0d6efd;
+      border-radius: 50%;
+    }
+
+    /* Portfolio */
+    
+   .portfolio-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 0 auto 25px;   /* center and space */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  width: 90%;            /* ✅ smaller than column width */
+  max-width: 280px;      /* ✅ reduced fixed max size */
+}
+    .portfolio-item img {
+      width: 100%;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    /* Services */
+    .service-card {
+      padding: 30px;
+      border-radius: 12px;
+      background: #fff;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+    .m1 ul li{
+        font-size: 22px;
+        padding:10px;
+    }
+  .social-icons a.instagram:hover {
+  background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
+  color: white;
+}
+
+.social-icons a.whatsapp:hover {
+  background: #25D366;
+  color: white;
+}
+
+.social-icons a.email:hover {
+  background: #0072c6;
+  color: white;
+}
+
+.social-icons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  background: #1d2a38; /* dark circle background */
+  color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background: #fff;    /* white background on hover */
+  color: #0b1622;      /* dark icon on hover */
+  transform: scale(1.1);
+}
+
+    /* Contact */
+    .contact-info i {
+      font-size: 1.5rem;
+      margin-right: 10px;
+      color: #0d6efd;
+    }
+
+
+     .resume-section {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 1800px;
+    margin: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+
+  .resume-header {
+    border-bottom: 2px solid #0a0b0b;
+    padding-bottom: 15px;
+  }
+
+  .resume-photo img {
+    width: 100px;
+    height: 120px; /* passport-size photo */
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #0b0b0b;
+  }
+
+  .resume-name h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .resume-name p {
+    margin: 0;
+    font-size: 16px;
+    color: #0e0e0e;
+  }
+
+  .resume-block h4 {
+    font-size: 20px;
+    color: #0a0a0b;
+    border-bottom: 1px solid #0e0e0f;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+
+  .resume-block p, .resume-block ul {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+
+  .resume-block ul {
+    padding-left: 20px;
+  }
+
+ 
+
+
+
+  .btn-primary {
+    background-color: #01060d;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+    /* Responsive */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 200px;
+      }
+      .main {
+        margin-left: 220px;
+      }
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+      }
+      .main {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="profile-pic">
+      <img src="pic.jpg" alt="Profile">
+    </div>
+    <h3>Neha Shinde</h3>
+    <nav>
+      <a href="#" class="nav-link active" data-target="home"><i class="fas fa-home"></i> Home</a>
+      <a href="#" class="nav-link" data-target="about"><i class="fas fa-user"></i> About</a>
+      <a href="#" class="nav-link" data-target="resume"><i class="fas fa-file"></i> Resume</a>
+      <a href="#" class="nav-link" data-target="portfolio"><i class="fas fa-image"></i> Portfolio</a>
+      <a href="#" class="nav-link" data-target="services"><i class="fas fa-briefcase"></i> Services</a>
+      <a href="#" class="nav-link" data-target="contact"><i class="fas fa-envelope"></i> Contact</a>
+    </nav>
+
+   <div class="social-icons">
+  <a href="https://instagram.com" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+  <a href="https://wa.me/1234567890" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+  <a href="mailto:example@email.com" class="email"><i class="fas fa-envelope"></i></a>
+</div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    
+   <!-- Home -->
+<div id="home" class="section active home">
+  <div class="hero">
+    <img src="new.jpg" alt="Background">
+    <div class="hero-text">
+      <h1>Hello, I'm Neha Shinde</h1>
+      <h3><span class="typed-text"></span></h3>
+      <p>
+         Hi, I'm Neha P Shinde, a passionate Full Stack Developer <br>who loves building clean, 
+        responsive, and user-friendly web applications.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- About -->
+   <div id="about" class="section">
+     <h1>About</h1>
+     <p> Recent Computer Science graduate and aspiring Full Stack Developer with a strong foundation in modern web technologies. 
+        Skilled in React.js, Spring Boot, MySQL, and RESTful API development. Passionate about creating responsive, scalable, 
+        and user-friendly applications. Strong problem-solving ability with hands-on project experience during academics.
+         Eager to contribute my skills and grow in a collaborative development environment. 
+        </p> <div class="row"> 
+            <div class="col-md-4">
+                 <img src="pic.jpg" class="img-fluid rounded m "> 
+                </div>
+                 <div class="col-md-8 m1"> 
+                    <h2><strong>UI/UX Designer & Web Developer</strong></h2> 
+                    <p>Recent Computer Science graduate and aspiring Full Stack Developer with skills in React.js, java, and Mysql,SpringBoot. Passionate about building responsive web applications and eager to contribute to a dynamic development team..</p> 
+                    <ul> <li><strong>Birthday:</strong>25 Jan 2004</li>
+                         <li><strong>Website:</strong> www.example.com</li> 
+                         <li><strong>Phone:</strong> +91 8652120119</li>
+                          <li><strong>City:</strong> Navi Mumbai</li>
+                           <li><strong>Age:</strong> 21</li>
+                            <li><strong>Degree:</strong> B.Tech</li> 
+                            <li><strong>Email:</strong> nehashinde8525@gmail.com</li> 
+                        </ul> 
+                    </div> </div> </div>
+
+      <div id="resume" class="section resume-section">
+  <!-- Header: Photo & Name -->
+  <div class="resume-header d-flex align-items-center mb-4">
+    <div class="resume-photo">
+      <img src="pic.jpg" alt="Profile Photo">
+    </div>
+    <div class="resume-name ms-3">
+      <h2>Neha Shinde</h2>
+      <p>Full Stack Developer</p>
+    </div>
+  </div>
+
+  <!-- About Me -->
+  <div class="resume-block mb-3">
+    <p>
+      Recent Computer Science graduate and aspiring Full Stack Developer. 
+      Skilled in React.js, Spring Boot, MySQL, and RESTful API development. 
+      Passionate about creating responsive, scalable, and user-friendly applications.
+    </p>
+  </div>
+
+  <!-- Experience -->
+  <div class="resume-block mb-3">
+    <h4>Experience</h4>
+    <div>
+      <h5>Internship - Web Developer</h5>
+      <small>2023 | ABC Company</small>
+      <p>Worked on frontend using React.js and backend APIs using Spring Boot and MySQL. 
+         Developed responsive UI and implemented RESTful services.</p>
+    </div>
+    <div>
+      <h5>B.Tech in Computer Science</h5>
+      <small>2020 - 2024 | XYZ University</small>
+      <p>Completed coursework in full stack web development, data structures, and algorithms.</p>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="resume-block mb-3">
+    <h4>Projects</h4>
+    <ul>
+      <li>Recipe Book Web App (React.js + Node.js + MongoDB)</li>
+      <li>Online Shopping System (Full Stack Application)</li>
+      <li>Personal Portfolio Website (HTML, CSS, JS, Bootstrap)</li>
+    </ul>
+  </div>
+
+  <!-- Certifications -->
+  <div class="resume-block mb-3">
+    <h4>Certifications</h4>
+    <ul>
+      <li>Full Stack Web Development – Coursera</li>
+      <li>React.js Advanced – Udemy</li>
+      <li>Java & Spring Boot – Edx</li>
+    </ul>
+  </div>
+
+  <!-- Contact Info -->
+  <div class="resume-block mb-3">
+    <h4>Contact</h4>
+    <ul>
+      <li>Email: nehashinde8525@gmail.com</li>
+      <li>Phone: +91 8652120119</li>
+      <li>Website: www.example.com</li>
+      <li>City: Navi Mumbai, India</li>
+    </ul>
+  </div>
+
+  <!-- Download PDF -->
+  <div class="text-center mt-4">
+    <button id="downloadResume" class="btn btn-primary">Download Resume PDF</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Portfolio -->
+    <div id="portfolio" class="section">
+      <h1>Portfolio</h1>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 1</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 2</div>
+          </div>
+        </div>
+      </div>
+
+       <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 1</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 2</div>
+          </div>
+        </div>
+      </div>
+       <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 1</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="">
+            <div class="portfolio-overlay">Project 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Services -->
+    <div id="services" class="section">
+      <h1>Services</h1>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="service-card">
+            <i class="fas fa-code fa-2x mb-3 text-primary"></i>
+            <h5>Web Development</h5>
+            <p>Responsive and modern websites with latest technologies.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="service-card">
+            <i class="fas fa-mobile fa-2x mb-3 text-primary"></i>
+            <h5>App Development</h5>
+            <p>Cross-platform mobile applications for iOS & Android.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div id="contact" class="section">
+      <h1>Contact</h1>
+      <div class="row">
+        <div class="col-md-6 contact-info">
+          <p><i class="fas fa-phone"></i> +91 8652120119</p>
+          <p><i class="fas fa-envelope"></i> nehashinde8525@gmail.com</p>
+        </div>
+        <div class="col-md-6">
+          <form>
+            <input type="text" class="form-control mb-2" placeholder="Your Name">
+            <input type="email" class="form-control mb-2" placeholder="Your Email">
+            <textarea class="form-control mb-2" rows="3" placeholder="Message"></textarea>
+            <button class="btn btn-primary w-100">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script>
+    // Navigation
+    const navLinks = document.querySelectorAll('.sidebar .nav-link');
+    const sections = document.querySelectorAll('.section');
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(s => {
+          s.classList.remove('active');
+          s.style.display = "none";
+        });
+        this.classList.add('active');
+        const target = this.getAttribute('data-target');
+        const section = document.getElementById(target);
+        section.style.display = "block";
+        setTimeout(() => section.classList.add('active'), 50);
+      });
+    });
+
+    // Typed.js for text animation
+    new Typed('.typed-text', {
+      strings: ["Full Stack Developer", "Web Developer","Frontened Developer", "Tech Enthusiast"],
+      typeSpeed: 60,
+      backSpeed: 40,
+      loop: true
+    });
+
+
+         document.getElementById("downloadResume").addEventListener("click", async function () {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF("p", "mm", "a4");
+    const resumeElement = document.querySelector(".resume-section");
+
+    // Convert HTML to canvas
+    const canvas = await html2canvas(resumeElement, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    // PDF page sizes
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    // Image dimensions
+    const imgWidth = pageWidth - 20; // 10mm margin left/right
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 10;
+
+    // First page
+    pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    // Extra pages if needed
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save("Neha_Shinde_Resume.pdf");
+  });
+  </script>
+</body>
+</html>
